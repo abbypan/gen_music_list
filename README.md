@@ -25,3 +25,6 @@ perl gen_music_list.pl http://music.xxx.com/music/
 generate http://music.xxx.com/music/test.html : 
 
 perl gen_music_list.pl http://music.xxx.com/music/  test
+
+
+![music.png](music.png)

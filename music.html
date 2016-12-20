@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>audio.js</title>
+    <meta content="width=device-width, initial-scale=0.6" name="viewport">
+    <style>
+      body { color: #666; font-family: sans-serif; line-height: 1.4; }
+      h1 { color: #444; font-size: 1.2em; padding: 14px 2px 12px; margin: 0px; }
+      h1 em { font-style: normal; color: #999; }
+      a { color: #888; text-decoration: none; }
+      #wrapper { width: 400px; margin: 40px auto; }
+      
+      ol { padding: 0px; margin: 0px; list-style: decimal-leading-zero inside; color: #ccc; width: 460px; border-top: 1px solid #ccc; font-size: 0.9em; }
+      ol li { position: relative; margin: 0px; padding: 9px 2px 10px; border-bottom: 1px solid #ccc; cursor: pointer; }
+      ol li a { display: block; text-indent: -3.3ex; padding: 0px 0px 0px 20px; }
+      li.playing { color: #aaa; text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3); }
+      li.playing a { color: #000; }
+      li.playing:before { content: '♬'; width: 14px; height: 14px; padding: 3px; line-height: 14px; margin: 0px; position: absolute; left: -24px; top: 9px; color: #000; font-size: 13px; text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2); }
+      
+      #shortcuts { position: fixed; bottom: 0px; width: 100%; color: #666; font-size: 0.9em; margin: 60px 0px 0px; padding: 20px 20px 15px; background: #f3f3f3; background: rgba(240, 240, 240, 0.7); }
+      #shortcuts div { width: 460px; margin: 0px auto; }
+      #shortcuts h1 { margin: 0px 0px 6px; }
+      #shortcuts p { margin: 0px 0px 18px; }
+      #shortcuts em { font-style: normal; background: #d3d3d3; padding: 3px 9px; position: relative; left: -3px;
+        -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); -o-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); }
+
+      @media screen and (max-device-width: 480px) {
+        #wrapper { position: relative; left: -3%; }
+        #shortcuts { display: none; }
+      }
+    </style>
+    <script src="./jquery.js"></script>
+    <script src="./audiojs/audio.min.js"></script>
+    <script>
+      $(function() { 
+        // Setup the player to autoplay the next track
+        var a = audiojs.createAll({
+          trackEnded: function() {
+            var next = $('ol li.playing').next();
+            if (!next.length) next = $('ol li').first();
+            next.addClass('playing').siblings().removeClass('playing');
+            audio.load($('a', next).attr('data-src'));
+            audio.play();
+          }
+        });
+        
+        // Load in the first track
+        var audio = a[0];
+            first = $('ol a').attr('data-src');
+        $('ol li').first().addClass('playing');
+        audio.load(first);
+
+        // Load in a track on click
+        $('ol li').click(function(e) {
+          e.preventDefault();
+          $(this).addClass('playing').siblings().removeClass('playing');
+          audio.load($('a', this).attr('data-src'));
+          audio.play();
+        });
+        // Keyboard shortcuts
+        $(document).keydown(function(e) {
+          var unicode = e.charCode ? e.charCode : e.keyCode;
+             // right arrow
+          if (unicode == 39) {
+            var next = $('li.playing').next();
+            if (!next.length) next = $('ol li').first();
+            next.click();
+            // back arrow
+          } else if (unicode == 37) {
+            var prev = $('li.playing').prev();
+            if (!prev.length) prev = $('ol li').last();
+            prev.click();
+            // spacebar
+          } else if (unicode == 32) {
+            audio.playPause();
+          }
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>music</h1>
+      <audio preload></audio>
+      <ol>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-凌烟阁.mp3">周华健-凌烟阁</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/相见难别亦难.mp3">相见难别亦难</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-欲罢不能.mp3">周华健-欲罢不能</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/女儿情-吴静.mp3">女儿情-吴静</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-借來的安慰.mp3">周华健-借來的安慰</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/红楼梦-天上掉下林妹妹.mp3">红楼梦-天上掉下林妹妹</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-念奴娇.mp3">周华健-念奴娇</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/烟花烬头.不纯-金陵.秦淮夜.mp3">烟花烬头.不纯-金陵.秦淮夜</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-洗澡歌.mp3">周华健-洗澡歌</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/Finale-云荒·只如初见.mp3">Finale-云荒·只如初见</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-Boring_Day.mp3">周华健-Boring_Day</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-笑英雄菊花会.mp3">周华健-笑英雄菊花会</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-雪中火.mp3">周华健-雪中火</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/择荇-眉如远山.mp3">择荇-眉如远山</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-瓦砾场.mp3">周华健-瓦砾场</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/雪千寻.mp3">雪千寻</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/女驸马-谁料皇榜中状元.mp3">女驸马-谁料皇榜中状元</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-新天长地久之男大当恋女大当爱.mp3">周华健-新天长地久之男大当恋女大当爱</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-加官晋爵.mp3">周华健-加官晋爵</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-张大春谈水滸108将.mp3">周华健-张大春谈水滸108将</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-好想哭.mp3">周华健-好想哭</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-一个,两个.mp3">周华健-一个,两个</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-青红皂白.mp3">周华健-青红皂白</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-浓情化不开.mp3">周华健-浓情化不开</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/河图-如花.mp3">河图-如花</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/孙川-中华武魂.mp3">孙川-中华武魂</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-安心.mp3">周华健-安心</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/金陵.秦淮夜.mp3">金陵.秦淮夜</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-吴兴国谈新京剧.mp3">周华健-吴兴国谈新京剧</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-忘江湖.mp3">周华健-忘江湖</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-水滸108.mp3">周华健-水滸108</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-荡寇誌.mp3">周华健-荡寇誌</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-女儿歌.mp3">周华健-女儿歌</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-深呼吸.mp3">周华健-深呼吸</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/天仙配-树上的鸟儿成双对.mp3">天仙配-树上的鸟儿成双对</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/墨宝-纪年.轩辕刺.mp3">墨宝-纪年.轩辕刺</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-水战.mp3">周华健-水战</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-情感蒸发.mp3">周华健-情感蒸发</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-看刀环.mp3">周华健-看刀环</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-现在才说我爱你.mp3">周华健-现在才说我爱你</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/此生难见月河雪.mp3">此生难见月河雪</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/晴空月儿明_ver1.mp3">晴空月儿明_ver1</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-身在梁山（剧版）.mp3">周华健-身在梁山（剧版）</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-九天玄女-1.mp3">周华健-九天玄女-1</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/择荇-既见君子.mp3">择荇-既见君子</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/时.mp3">时</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/笑傲江湖-沧海一声笑.mp3">笑傲江湖-沧海一声笑</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-从一开始.mp3">周华健-从一开始</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-吶喊忠义堂（我上大名府＋三+打祝家庄+潯阳客梦）.mp3">周华健-吶喊忠义堂（我上大名府＋三+打祝家庄+潯阳客梦）</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-你说得对.mp3">周华健-你说得对</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-周华健Voice.mp3">周华健-周华健Voice</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-潮.mp3">周华健-潮</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-怎么了.mp3">周华健-怎么了</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-是你叫我.mp3">周华健-是你叫我</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-谁叫我.mp3">周华健-谁叫我</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-纹身.mp3">周华健-纹身</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/五百年桑田沧海_独唱版.mp3">五百年桑田沧海_独唱版</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/Finale-杯雪·凋朱颜.mp3">Finale-杯雪·凋朱颜</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-然后然后.mp3">周华健-然后然后</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-忘忧草.mp3">周华健-忘忧草</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-好想好想.mp3">周华健-好想好想</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/一肩挑起千古情.mp3">一肩挑起千古情</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-多一分钟，少一分钟.mp3">周华健-多一分钟，少一分钟</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/新白娘子传奇-离愁萦绕清波门.mp3">新白娘子传奇-离愁萦绕清波门</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-Love_Hotel_秋的別館.mp3">周华健-Love_Hotel_秋的別館</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-一起吃苦的幸福.mp3">周华健-一起吃苦的幸福</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/任贤齐-英雄有路.mp3">任贤齐-英雄有路</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-意外的旅客.mp3">周华健-意外的旅客</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-完完全全.mp3">周华健-完完全全</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-风笑痴.mp3">周华健-风笑痴</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-晴空.mp3">周华健-晴空</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-Moring_Call.mp3">周华健-Moring_Call</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/河图-倾尽天下.mp3">河图-倾尽天下</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-幸福到想哭_（Demo）.mp3">周华健-幸福到想哭_（Demo）</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/晴空月儿明_ver2.mp3">晴空月儿明_ver2</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-为爱情受伤.mp3">周华健-为爱情受伤</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/墨宝-紫川录.mp3">墨宝-紫川录</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-林秀伟谈上梁山.mp3">周华健-林秀伟谈上梁山</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-平安夜.mp3">周华健-平安夜</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-吴兴国谈水滸源起.mp3">周华健-吴兴国谈水滸源起</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-1234567.mp3">周华健-1234567</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-我怕会头晕.mp3">周华健-我怕会头晕</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/穆桂英大破天门阵-缘来是注定.mp3">穆桂英大破天门阵-缘来是注定</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-你们.mp3">周华健-你们</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-百单八将.mp3">周华健-百单八将</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/Finale-别曲.mp3">Finale-别曲</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/三国志五（游戏）：光辉之龙_光芒之龍.mp3">三国志五（游戏）：光辉之龙_光芒之龍</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-梁山梦.mp3">周华健-梁山梦</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-任尔轻狂.mp3">周华健-任尔轻狂</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/久石让-幽灵公主-アシタカせっき.mp3">久石让-幽灵公主-アシタカせっき</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-生辰纲.mp3">周华健-生辰纲</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-一点空间.mp3">周华健-一点空间</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-有没有一首歌会让你想起我.mp3">周华健-有没有一首歌会让你想起我</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/天外悠悠隔沧浪.mp3">天外悠悠隔沧浪</a></li>
+<li><a href="#" data-src="http://music.xxx.com/music/mp3/周华健-九天玄女-2.mp3">周华健-九天玄女-2</a></li>
+      </ol>
+    </div>
+    <div id="shortcuts">
+      <div>
+        <h1>Keyboard shortcuts:</h1>
+        <p><em>&rarr;</em> Next track</p>
+        <p><em>&larr;</em> Previous track</p>
+        <p><em>Space</em> Play/pause</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -42,6 +42,8 @@
             if (!next.length) next = $('ol li').first();
             next.addClass('playing').siblings().removeClass('playing');
             audio.load($('a', next).attr('data-src'));
+            $(document).attr( "title", $('a', next).text() );
+            $('#music').text( $('a', next).text() );
             audio.play();
           }
         });

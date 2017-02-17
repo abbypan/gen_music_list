@@ -57,6 +57,8 @@
           e.preventDefault();
           $(this).addClass('playing').siblings().removeClass('playing');
           audio.load($('a', this).attr('data-src'));
+          $(document).attr( "title", $('a', this).text() );
+          $('#music').text( $('a', this).text() );
           audio.play();
         });
         // Keyboard shortcuts
@@ -82,7 +84,7 @@
   </head>
   <body>
     <div id="wrapper">
-      <h1>music</h1>
+      <h1 id="music">music</h1>
       <audio preload></audio>
       <ol>
 [%music_list%]

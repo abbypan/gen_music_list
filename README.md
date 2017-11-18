@@ -7,24 +7,19 @@ music player : [audio.js](https://github.com/kolber/audiojs)
 
 ## var
 
-mp3 directory : mp3/
+web path:  http://music.xxx.com/gen_music_list/
 
-web path :  http://music.xxx.com/music/
+local path: /var/www/html/gen_music_list/
 
+mp3 directory: /var/www/html/gen_music_list/data/
 
 ## usage
 
-perl gen_music_list.pl [web_path] [filename]
+perl gen_music_list.pl [music_path] [filename]
 
+generate http://music.xxx.com/gen_music_list/index.html
 
-generate http://music.xxx.com/music/music.html : 
-
-perl gen_music_list.pl http://music.xxx.com/music/ 
-
-
-generate http://music.xxx.com/music/test.html : 
-
-perl gen_music_list.pl http://music.xxx.com/music/  test
-
+    $ cd /var/www/html/gen_music_list/
+    $ perl gen_music_list.pl data index.html
 
 ![music.png](music.png)

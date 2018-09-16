@@ -7,7 +7,8 @@
     <style>
       body { color: #666; font-family: sans-serif; line-height: 1.4; }
       h1 { color: #444; font-size: 1.2em; padding: 14px 2px 12px; margin: 0px; }
-      h1 em { font-style: normal; color: #999; }
+      h1 { font-style: normal; color: #999; }
+      em { font-style: bold; color: red; }
       a { color: #888; text-decoration: none; }
       #wrapper { width: 400px; margin: 40px auto; }
       
@@ -65,16 +66,35 @@
           $('#music').text( $('a', this).text() );
           audio.play();
         });
+
+        $('em.next').click(function(e){
+              var all_n = $('ol li').length;
+              var r=Math.floor(Math.random() * all_n);
+              var next = $('#random').is(':checked') ? $('ol li').eq(r) : $('li.playing').next();
+              if (!next.length) next = $('ol li').first();
+              next.click();
+        });
+
+        $('em.prev').click(function(e){
+            var prev = $('li.playing').prev();
+            if (!prev.length) prev = $('ol li').last();
+            prev.click();
+        });
+
+        $('em.pause').click(function(e){
+            audio.playPause();
+        });
+
         // Keyboard shortcuts
         $(document).keydown(function(e) {
           var unicode = e.charCode ? e.charCode : e.keyCode;
              // right arrow
           if (unicode == 39) {
-	  var all_n = $('ol li').length;
-	  var r=Math.floor(Math.random() * all_n);
-	  var next = $('#random').is(':checked') ? $('ol li').eq(r) : $('li.playing').next();
-            if (!next.length) next = $('ol li').first();
-            next.click();
+              var all_n = $('ol li').length;
+              var r=Math.floor(Math.random() * all_n);
+              var next = $('#random').is(':checked') ? $('ol li').eq(r) : $('li.playing').next();
+              if (!next.length) next = $('ol li').first();
+              next.click();
             // back arrow
           } else if (unicode == 37) {
             var prev = $('li.playing').prev();
@@ -91,7 +111,7 @@
   <body>
     <div id="wrapper">
       <h1 id="music">music</h1>
-      <p><em>&rarr;</em> Next track ; <em>&larr;</em> Previous track; <em>Space</em> Play/pause</p>
+      <p><em class="next">&rarr;</em> Next;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em class="prev">&larr;</em> Previous;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em class="pause">Space</em> Play/Pause</p>
 	<p><input id="random" type="checkbox">随机播放</p>
       <audio preload></audio>
       <ol>
